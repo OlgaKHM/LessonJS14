@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@800&family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Задача 1</title>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <h2>Задача 1.</h2>
+      <p>
+        Описати масив об’єктів – сайтів розроблених компанією з такими
+        властивостями<br />
+        ----- Властивості ------
+      </p>
+      <ol>
+        <li>назва компанії на час розробки (назву періодично змінюють)</li>
+        <li>власник компанії</li>
+        <li>споснсори (масив спонсорів)</li>
+        <ol>
+          <li>* прізвище спонсора</li>
+          <li>* ім’я спонсора</li>
+          <li>* сума вкладень спонсора</li>
+        </ol>
+        <li>рік випуску</li>
+        <li>вартість сайту.</li>
+      </ol>
+      <p>Знайти:</p>
+      <ul>
+        <li>1. загальну вартість усіх сайтів</li>
+        <li>2. кількість сайтів, що було зроблено між 2000 та 2009 рр</li>
+        <li>
+          3. кількість сайтів, де сума спонсорських вкладень була більшою за
+          100000
+        </li>
+        <li>
+          4. створити загальний список усіх спонсорів (поки можуть
+          повторюватись, просто зібрати усі у масив)
+        </li>
+        <li>5. знайти рік, коли прибуток був найбільшим</li>
+        <li>6. упорядкувати список за спаданням прибутку</li>
+        <li>
+          7. Створити 2 окремих списки з копіями об’єктів, що містять сайти з
+          вартість до 10000 і більше 10000
+        </li>
+      </ul>
+    </div>
+    <script>
+      let listOfCompani = [
+        {
+          name: "Antal",
+          owner: "Inna Russ",
+          sponsor: {
+            nume: "Emma",
+            surname: "Baym",
+            money: 2000,
+          },
+          yearOfIssue: 2000,
+          siteCost: 9000,
+        },
+        {
+          name: "Babolat",
+          owner: "Ben Baym",
+          sponsor: {
+            nume: "Adam",
+            surname: "Edgarson",
+            money: 3500,
+          },
+          yearOfIssue: 2001,
+          siteCost: 15000,
+        },
+        {
+          name: "Clarins",
+          owner: "Oliver Edgarson",
+          sponsor: {
+            nume: "Ryan",
+            surname: "Caleb",
+            money: 300,
+          },
+          yearOfIssue: 2004,
+          siteCost: 5000,
+        },
+        {
+          name: "Fondital",
+          owner: "Jessica Isla",
+          sponsor: {
+            nume: "Harry",
+            surname: "Foraco",
+            money: 1000,
+          },
+          yearOfIssue: 2007,
+          siteCost: 25000,
+        },
+        {
+          name: "Kidzania",
+          owner: "Oscar Foraco",
+          sponsor: {
+            nume: "Amber",
+            surname: "Thomason",
+            money: 600,
+          },
+          yearOfIssue: 2009,
+          siteCost: 8000,
+        },
+        {
+          name: "Lisec",
+          owner: "Lorar Thomason",
+          sponsor: {
+            nume: "Luka",
+            surname: "Koper",
+            money: 1000,
+          },
+          yearOfIssue: 2010,
+          siteCost: 12000,
+        },
+        {
+          name: "Posco",
+          owner: "Caroline Koper",
+          sponsor: {
+            nume: "Bill",
+            surname: "Dave",
+            money: 2000,
+          },
+          yearOfIssue: 2011,
+          siteCost: 20000,
+        },
+        {
+          name: "Sanatmetal",
+          owner: "Tom Dave",
+          sponsor: {
+            nume: "Rosy",
+            surname: "Sbarro",
+            money: 2500,
+          },
+          yearOfIssue: 2012,
+          siteCost: 17000,
+        },
+        {
+          name: "Teva",
+          owner: "Danny Sbarro",
+          sponsor: {
+            nume: "Pamela",
+            surname: "Evans",
+            money: 1500,
+          },
+          yearOfIssue: 2015,
+          siteCost: 23000,
+        },
+      ]
+      // 1. загальну вартість усіх сайтів
+      const totalPrice = listOfCompani.reduce(
+        (prevSum, compani) => prevSum + compani.siteCost,
+        0
+      )
+      // 2. кількість сайтів, що було зроблено між 2000 та 2009 рр
+      let counter = 0
+      for (let compani of listOfCompani) {
+        if (compani.yearOfIssue >= 2000 && compani.yearOfIssue <= 2009)
+          counter++
+      }
+      // 3. кількість сайтів, де сума спонсорських вкладень була більшою за 100000
+
+      let sponsorshipMore100000 = 0
+      for (let compani of listOfCompani) {
+        if (compani.sponsor.money > 100000) sponsorshipMore100000++
+      }
+
+      // 4. створити загальний список усіх спонсорів
+      const listOfSponsors = listOfCompani.map(
+        (item) => ` ${item.sponsor.nume} ${item.sponsor.surname}`
+      )
+
+      // 5. знайти рік, коли прибуток був найбільшим
+      function maxProfitYear(listOfCompani) {
+        let maxProfit = -Infinity
+        let yearMaxProfit
+        listOfCompani.forEach((compani) => {
+          if (compani.siteCost > maxProfit) maxProfit = compani.siteCost
+          yearMaxProfit = compani.yearOfIssue
+        })
+        return yearMaxProfit
+      }
+      const yearMaxProfit = maxProfitYear(listOfCompani)
+
+      // 6. упорядкувати список за спаданням прибутку
+      let listOfCompaniNew = JSON.parse(JSON.stringify(listOfCompani))
+      listOfCompaniNew.sort(
+        (compani1, compani2) => compani2.siteCost - compani1.siteCost
+      )
+
+      // Створити 2 окремих списки з копіями об’єктів, що містять сайти з вартість до 10000 і більше 10000
+      let siteCostOver10000 = listOfCompani.filter(
+        (item) => item.siteCost > 10000
+      )
+      let siteCostTo10000 = listOfCompani.filter(
+        (item) => item.siteCost < 10000
+      )
+
+      document.write("<table><tbody>")
+      document.write(
+        `<tr><td>загальна вартість усіх сайтів :</td><td>${totalPrice}</td></tr>`
+      )
+      document.write(
+        `<tr><td>кількість сайтів, що було зроблено між 2000 та 2009 рр :</td><td>${counter}</td></tr>`
+      )
+      document.write(
+        `<tr><td>кількість сайтів, де сума спонсорських вкладень була більшою за 100000 :</td><td>${sponsorshipMore100000}</td></tr>`
+      )
+      document.write(
+        `<tr><td>створити загальний список усіх спонсорів :</td><td>${listOfSponsors}</td></tr>`
+      )
+      document.write(
+        `<tr><td>рік, коли прибуток був найбільшим :</td><td>${yearMaxProfit}</td></tr>`
+      )
+
+      document.write("</tbody></table>")
+    </script>
+  </body>
+</html>
